@@ -1,0 +1,98 @@
+#include <iostream>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main()
+{
+	srand(time(NULL));
+	string room[4][3];
+	int mapWidth = 4;
+	int mapHeight = 3;
+	bool hasKey = false;
+
+	room[0][0] = "Beachside View \n Walk the white sand beach.";
+	room[0][1] = "Village Entrance \n A sleepy village sitys, barely anybody wandering around.";
+	room[0][2] = "Village Inn \n You could order some tasty pancakes here.";
+	room[1][0] = "Cliffside \n A tall cliff to the north blocks your way further.";
+	room[2][0] = "Cave Entrance \n A gaping hole in the cliff wall leads inwards to a dark cavern.";
+	room[3][0] = "Inside Cave \n The spooky cave is dark and damp.";
+	room[1][1] = "Grassy Field \n You are standing in a grassy field.";
+	room[1][2] = "Mountain Side \n You are blocked by a mountain.";
+	room[2][1] = "Green Valley \n Take a walk through a field of flowers.";
+	room[2][2] = "Mountain Entrance \n Enter the mountain here.";
+	room[3][1] = "Deep Cave \n There is a man dressed like a bat in here, much to your surprise.";
+	room[3][2] = "Mountain Cavern \n You find a river inside this mountain.";
+
+	int playerX = 1;
+	int playerY = 1;
+	bool isDone = false;
+
+	int keyX = rand() % mapWidth;
+	int keyY = rand() % mapHeight;
+	int doorX = rand() % mapWidth;
+	int doorY = rand() % mapHeight;
+
+	while (isDone == false)
+	{
+
+		cout << room[playerX][playerY] << endl;
+
+		if (hasKey == true)
+		{
+			cout << "You are carrying a key." << endl;
+		}
+
+		if (playerX == doorX && playerY == doorY )
+		{
+			if (hasKey == true)
+			{
+				cout << "You have unlocked the door!" << endl;
+				isDone = true;
+				break;
+			}
+			else
+			{
+				cout << "There is a door here, but it is locked." << endl;
+			}
+		}
+		else if (playerX == keyX && playerY == keyY)
+		{
+			cout << "There is a key here." << endl;
+			cout << "You picked up the key!" << endl;
+			hasKey = true;
+		}
+		
+		cout << "Choose a direction [N]orth, [S]outh, [E]ast, or [W]: " << endl;
+		char choice;
+		cin >> choice;
+		choice = tolower(choice);
+
+		if (choice == 'n' && playerY > 0)
+		{
+			playerY--;
+		}
+		else if (choice == 's' && playerY < mapHeight - 1)
+		{
+			playerY++;
+		}
+		else if (choice == 'e' && playerX < mapWidth - 1)
+		{
+			playerX++;
+		}
+		else if (choice == 'w' && playerX > 0)
+		{
+			playerX--;
+		}
+		else
+		{
+			cout << "You cannot go that way!" << endl;
+		}
+
+	}
+
+	cout << "You win!" << endl;
+
+	return 0;
+}
